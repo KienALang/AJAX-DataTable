@@ -5,3 +5,14 @@
 body {
 	font-family: 'Segoe UI', Helvetica, sans-serif;
 }
+
+th {
+	cursor: pointer;
+}
+
+th:nth-child(3), th:last-child {
+	min-width: 130px;
+}
+th:nth-child(1), th:nth-child(6) {
+	min-width: 90px;
+}

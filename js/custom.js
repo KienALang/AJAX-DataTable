@@ -3,6 +3,14 @@ var globalPagination;
 
 window.onload = function () {
 	reload();
+	var thSelectors = document.getElementsByTagName('th');
+	for (var i = 0; i < thSelectors.length; i++) {
+		thSelectors[i].setAttribute("onclick", "sort(this)");
+	}
+}
+
+function sort(obj) {
+	alert(obj.innerHTML);
 }
 
 function reload() {
@@ -38,18 +46,16 @@ var getCurrentPage = function() {
 	return document.getElementsByClassName('active')[0].getElementsByTagName('a')[0].innerHTML;
 }
 
-
-
 function Table(startRow, endRow) {
 	this.startRow = startRow;
 	this.endRow = (endRow > globalUsers.length) ? globalUsers.length : endRow;
 	this.length = this.endRow - this.startRow;
-	this.statusText = 'Show '+ this.startRow +' to '+this.endRow+' of ' + globalUsers.length;	
+	this.statusText = 'Show '+ (this.startRow + 1) +' to '+this.endRow+' of ' + globalUsers.length;	
 	
 	this.showTable = function() {
 		var ouput = '';
-		for (var i = startRow; i < endRow; i++) {
-			var address = 'Street: '+globalUsers[i].address.street + '; Suite: ' + globalUsers[i].address.suite + '; City: ' + globalUsers[i].address.city;
+		for (var i = this.startRow; i < this.endRow; i++) {
+			var address = 'Street: '+globalUsers[i].address.street + ';\n Suite: ' + globalUsers[i].address.suite + ';\n City: ' + globalUsers[i].address.city;
 			ouput += '<tr><td>'+globalUsers[i].id+'</td>' + '<td>'+globalUsers[i].name+'</td>' + '<td>'+globalUsers[i].username+'</td>' + '<td>'+globalUsers[i].email+'</td>' + '<td>'+address+'</td>' + '<td>'+globalUsers[i].phone+'</td>' + '<td>'+globalUsers[i].website+'</td>' + '<td>'+globalUsers[i].company.name+'</td></tr>';
 		}
 
@@ -66,7 +72,11 @@ function Pagination(maxPageNum) {
 	this.paginationId = document.getElementById('paginationId');	
 	this.getNumberofRow = function() {
 		var select = document.getElementById('selection');
-		return select.options[select.selectedIndex].text;
+		var value = select.options[select.selectedIndex].text;
+		if (value != 'All') {
+			return parseInt(value);
+		}
+		return globalUsers.length;
 	}
 
 	this.getNumberofTable = function() {		
