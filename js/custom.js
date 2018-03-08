@@ -44,7 +44,7 @@ function Table(startRow, endRow) {
 	this.startRow = startRow;
 	this.endRow = (endRow > globalUsers.length) ? globalUsers.length : endRow;
 	this.length = this.endRow - this.startRow;
-	this.statusText = 'Show '+ this.length +' of ' + globalUsers.length;	
+	this.statusText = 'Show '+ this.startRow +' to '+this.endRow+' of ' + globalUsers.length;	
 	
 	this.showTable = function() {
 		var ouput = '';
